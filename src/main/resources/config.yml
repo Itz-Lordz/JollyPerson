@@ -1,0 +1,8 @@
+host: "localhost"
+port: 3306
+database: "plugintesting"
+username: "plugintesting"
+password: "plugin"
+punishments:
+  kickAnnouncement: "1"
+  kickMessage: "1"

@@ -1,0 +1,24 @@
+name: BanManager
+version: ${version}
+main: me.JollyPerson.BanManagerer
+author: JollyPerson
+description: Diffusion's ban manager.
+commands:
+  ban:
+    description: Bans the specified player with a reason.
+    usage: /ban <player> <reason>
+  tempban:
+    description: Temporarily bans the specified player with a reason and custom timestamp.
+    usage: /tempban <player> <time> <H:hour Mo:Month D:Days Min:Minutes S:Seconds Y:years> <reason>
+  mute:
+    description: Mutes the specified player with a reason.
+    usage: /mute <player> <reason>
+  tempmute:
+    description: Temporarily mutes the specified player with a reason and custom timestamp.
+    usage: /tempmute <player> <time> <H:hour Mo:Month D:Days Min:Minutes S:Seconds Y:years> <reason>
+  kick:
+    description: Kicks the specified player with a reason.
+    usage: /kick <player> <reason>
+  warn:
+    description: Warns the specified player with a reason.
+    usage: /warn <player> <reason>
