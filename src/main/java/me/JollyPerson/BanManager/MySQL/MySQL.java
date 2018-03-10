@@ -1,6 +1,7 @@
 package me.JollyPerson.BanManager.MySQL;
 
 import me.JollyPerson.BanManager.BanManager;
+import org.bukkit.ChatColor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -406,18 +407,108 @@ public class MySQL {
         }
     }
 
-    public String getBanReason(String bannedPlayer) {
+    public String getBanReason(String bannedPlayerUUID) {
         String reason = new String();
+        String getBanReason = "SELECT * from banned WHERE BannedPlayerUUID = ?";
+        PreparedStatement statement = null;
+        try {
+            Connection connection = main.dataSource.getConnection();
+            statement = connection.prepareStatement(getBanReason);
+            statement.setString(1, bannedPlayerUUID);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                reason = result.getString("Reason");
+            }
+        } catch (SQLException e) {
+            reason = "Error";
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    reason = "Error";
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    reason = "Error";
+                }
+            }
+        }
         return reason;
     }
 
-    public String getBanBanner(String bannedPlayer) {
+    public String getBanBanner(String bannedPlayerUUID) {
         String banner = new String();
+        String getBanBanner = "SELECT * from banned WHERE BannedPlayerUUID = ?";
+        PreparedStatement statement = null;
+        try {
+            Connection connection = main.dataSource.getConnection();
+            statement = connection.prepareStatement(getBanBanner);
+            statement.setString(1, bannedPlayerUUID);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                banner = result.getString("Banner");
+            }
+        } catch (SQLException e) {
+            banner = "Error";
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    banner = "Error";
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    banner = "Error";
+                }
+            }
+        }
         return banner;
     }
 
-    public String getTempBanReason(String bannedPlayer) {
+    public String getTempBanReason(String bannedPlayerUUID) {
         String reason = new String();
+        String getBanReason = "SELECT * from tempbanned WHERE BannedPlayerUUID = ?";
+        PreparedStatement statement = null;
+        try {
+            Connection connection = main.dataSource.getConnection();
+            statement = connection.prepareStatement(getBanReason);
+            statement.setString(1, bannedPlayerUUID);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                reason = result.getString("Reason");
+            }
+        } catch (SQLException e) {
+            reason = "Error";
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    reason = "Error";
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    reason = "Error";
+                }
+            }
+        }
         return reason;
     }
 
@@ -426,8 +517,38 @@ public class MySQL {
         return banner;
     }
 
-    public String getMuteReason(String mutedPlayer) {
+    public String getMuteReason(String mutedPlayerUUID) {
         String reason = new String();
+        String getMuteReason = "SELECT * from muted WHERE mutedPlayerUUID = ?";
+        PreparedStatement statement = null;
+        try {
+            Connection connection = main.dataSource.getConnection();
+            statement = connection.prepareStatement(getMuteReason);
+            statement.setString(1, mutedPlayerUUID);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                reason = result.getString("Reason");
+            }
+        } catch (SQLException e) {
+            reason = "Error";
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    reason = "Error";
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    reason = "Error";
+                }
+            }
+        }
         return reason;
     }
 
