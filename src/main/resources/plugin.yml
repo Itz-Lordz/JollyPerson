@@ -1,6 +1,6 @@
 name: BanManager
 version: ${version}
-main: me.JollyPerson.BanManagerer
+main: me.JollyPerson.BanManager.BanManager
 author: JollyPerson
 description: Diffusion's ban manager.
 commands:

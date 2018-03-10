@@ -20,7 +20,7 @@ public class BanManager extends JavaPlugin {
         this.mysqlHandler = new MySQLHandler(this);
         this.mySQL = new MySQL(this);
         loadConfig();
-        getCommand("ban").setExecutor(new banCommand());
+        getCommand("ban").setExecutor(new banCommand(mySQL));
         getCommand("tempban").setExecutor(new tempbanCommand());
         getCommand("kick").setExecutor(new kickCommand(this));
         getCommand("mute").setExecutor(new muteCommand());
@@ -36,7 +36,6 @@ public class BanManager extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
     }
 
 

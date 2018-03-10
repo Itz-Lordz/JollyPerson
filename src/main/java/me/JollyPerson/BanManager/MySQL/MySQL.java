@@ -1,12 +1,16 @@
 package me.JollyPerson.BanManager.MySQL;
 
 import me.JollyPerson.BanManager.BanManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 
 public class MySQL {
@@ -134,7 +138,7 @@ public class MySQL {
     }
 
     public boolean isBanned(String playerUUID) {
-        String isBanned = "SELECT * from banned WHERE BannedPlayerUUID = ?";
+        String isBanned = "SELECT * from `banned` WHERE BannedPlayerUUID = ?";
         PreparedStatement statement = null;
         try {
             Connection connection = main.dataSource.getConnection();
@@ -142,27 +146,36 @@ public class MySQL {
             statement.setString(1, playerUUID);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
+                System.out.println("Found user");
+                System.out.println(result.getString("BannedPlayerName"));
+                System.out.println(result.getString("BannedPlayerUUID"));
+                System.out.println(result.getString("Reason"));
+                System.out.println(result.getString("Banner"));
                 return true;
             }
         } catch (SQLException e) {
-            return false;
+            e.printStackTrace();
+
         } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            try {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if (statement != null) {
+                    try {
+                        statement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-
         return false;
     }
 
@@ -407,17 +420,22 @@ public class MySQL {
         }
     }
 
-    public String getBanReason(String bannedPlayerUUID) {
-        String reason = new String();
+    public String getBanReason(UUID bannedPlayerUUID) {
+        String reason = null;
         String getBanReason = "SELECT * from banned WHERE BannedPlayerUUID = ?";
         PreparedStatement statement = null;
         try {
             Connection connection = main.dataSource.getConnection();
             statement = connection.prepareStatement(getBanReason);
-            statement.setString(1, bannedPlayerUUID);
+            statement.setString(1, bannedPlayerUUID.toString());
             ResultSet result = statement.executeQuery();
             if (result.next()) {
                 reason = result.getString("Reason");
+                OfflinePlayer target = Bukkit.getOfflinePlayer(bannedPlayerUUID);
+                if(target.isOnline()){
+                    Player toGet = (Player) target;
+                    toGet.sendMessage(reason);
+                }
             }
         } catch (SQLException e) {
             reason = "Error";
